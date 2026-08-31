@@ -137,14 +137,22 @@ Formally tests whether the patterns observed in the EDA stage are statistically 
 
 - Customers on **month-to-month** contracts churn at a noticeably higher rate than annual or two-year contract holders
 - Churn is heavily concentrated in the **first 0–12 months** of tenure
+  <img width="900" height="550" alt="Churn Rate by Tenure period" src="https://github.com/user-attachments/assets/de234ec7-2d43-4bfe-88d4-4c00d28c4449" />
 - **Streaming service** subscribers churn more, while **tech support** and **online security** subscribers churn less
+  <img width="900" height="550" alt="Churn Rate by Services Provided" src="https://github.com/user-attachments/assets/599ba772-7fa8-4b99-a70e-e87cdd29f89b" />
 - **Fiber optic** internet customers churn roughly **6×** more than customers with no internet service
+  <img width="900" height="550" alt="Churn Rate by Internet type" src="https://github.com/user-attachments/assets/5e02a052-67c6-4ce1-b4c4-b5c233705f6e" />
 - Customers paying by **electronic check** churn significantly more than those on automatic payment methods
+<img width="900" height="550" alt="Churn Rate by Payment Method" src="https://github.com/user-attachments/assets/7cf72009-ed7f-4d54-a292-90743d782d61" />
 - Customers receiving **discounts or add-on charges** churn about **3× less** than those receiving neither
+  <img width="900" height="550" alt="Churn Rate by Charge Category" src="https://github.com/user-attachments/assets/c12f5823-105f-4eec-9a93-4479f488aa20" />
 - **Senior citizens** show a higher churn rate than non-senior customers (see the note in [Bug Fixes](#bug-fixes--data-quality-corrections) below before relying on this one)
+  <img width="900" height="550" alt="Churn Rate by Age Bucket" src="https://github.com/user-attachments/assets/e43c7a02-337f-4241-9116-dc4595bd449a" />
 - A **high-risk profile** — defined by contract type, tenure period, and internet service — was found for **916 customers**: 643 have already churned, and **273 remain as high-potential future churn**
 - This high-risk segment is just **13.01%** of the customer base but accounts for a **70.2% churn rate** (vs. 20.0% for everyone else) and **38.2%** of total monthly revenue at risk
 - Average monthly revenue at risk is **$82.70 per churned customer**, pushing potential monthly revenue at risk up by **42%**
+  <img width="1600" height="900" alt="High Risk vs Other Customers – Key Metrics" src="https://github.com/user-attachments/assets/5498f1d5-7ca4-444b-a182-3d2170986488" />
+
 
 **From statistical testing:** see the [Statistical Validation Summary](#statistical-validation-summary) below.
 
@@ -224,20 +232,7 @@ Issues identified and resolved during development:
 
 1. **Blank strings masquerading as "no missing data."** Standard null checks (`isna()`/`isnull()`) reported zero missing values, but `TotalCharges` actually contained 11 records with blank whitespace strings rather than true `NaN`s — invisible to a null check, but fatal to a numeric conversion. **Fix:** explicitly detected blank strings via a stripped-string comparison, then converted the column with `pd.to_numeric(..., errors="coerce")` and filled the resulting missing values.
 2. **Invalid zero/negative values skewing calculations.** A handful of records had zero or negative `tenure`, `MonthlyCharges`, or `TotalCharges` values, which would have distorted KPI calculations and statistical test results. **Fix:** filtered out any row where these fields weren't strictly positive before analysis.
-
-> Add any other bugs you fixed along the way (environment setup, dependency conflicts, notebook/kernel issues, SQL connection errors, etc.) — this section is meant to keep growing as you run into and resolve issues.
-
-## Future Improvements
-
-- Train a predictive model (e.g., logistic regression, random forest, XGBoost) to score churn risk per customer
-- Build an interactive dashboard (Streamlit, Power BI, or Tableau) on top of the SQL queries
-- Automate the CSV → PostgreSQL load step with a script instead of a manual step
-- Add confidence intervals / effect sizes alongside the p-values for richer statistical reporting
-- Expand hypothesis testing to the remaining categorical variables (contract type, internet type, payment method)
-
-## Author
-
-**Durvanshu**
+3. **Data Type Conversion.**The `TotalCharges` column was stored as a string (`object`) instead of a numeric data type. This happened because the column contained invalid or blank values.**Fix:** Converted `TotalCharges` from string to a numeric data type and handled invalid values appropriately.
 
 ## Acknowledgments
 
