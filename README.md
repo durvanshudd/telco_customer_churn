@@ -233,6 +233,9 @@ Issues identified and resolved during development:
 1. **Blank strings masquerading as "no missing data."** Standard null checks (`isna()`/`isnull()`) reported zero missing values, but `TotalCharges` actually contained 11 records with blank whitespace strings rather than true `NaN`s — invisible to a null check, but fatal to a numeric conversion. **Fix:** explicitly detected blank strings via a stripped-string comparison, then converted the column with `pd.to_numeric(..., errors="coerce")` and filled the resulting missing values.
 2. **Invalid zero/negative values skewing calculations.** A handful of records had zero or negative `tenure`, `MonthlyCharges`, or `TotalCharges` values, which would have distorted KPI calculations and statistical test results. **Fix:** filtered out any row where these fields weren't strictly positive before analysis.
 3. **Data Type Conversion.**The `TotalCharges` column was stored as a string (`object`) instead of a numeric data type. This happened because the column contained invalid or blank values.**Fix:** Converted `TotalCharges` from string to a numeric data type and handled invalid values appropriately.
+4. **Incorrect `SeniorCitizen` Data Type and Interpretation.** The `SeniorCitizen` column was stored as a numeric binary variable (`0` and `1`) rather than a readable categorical variable. This made the data harder to interpret and increased the risk of treating the column as a continuous numerical feature during analysis.Converted the values to meaningful categorical labels:
+- `0` → `No`
+- `1` → `Yes`
 
 ## Acknowledgments
 
