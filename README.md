@@ -24,8 +24,6 @@
 - [Setup & Installation](#setup--installation)
 - [How to Run](#how-to-run)
 - [Bug Fixes & Data Quality Corrections](#bug-fixes--data-quality-corrections)
-- [Future Improvements](#future-improvements)
-- [Author](#author)
 - [Acknowledgments](#acknowledgments)
 
 ---
@@ -73,7 +71,6 @@ Inferred from the relative paths used in the notebooks (`Path("..") / "Data" / .
 │   ├── 09_High_risk_profiles.sql
 │   └── 10_Monthly_revenue_at_risk.sql
 ├── .env                # not committed — holds DB credentials
-├── requirements.txt
 └── README.md
 ```
 
@@ -144,13 +141,13 @@ Formally tests whether the patterns observed in the EDA stage are statistically 
   <img width="900" height="550" alt="Churn Rate by Internet type" src="https://github.com/user-attachments/assets/5e02a052-67c6-4ce1-b4c4-b5c233705f6e" />
 - Customers paying by **electronic check** churn significantly more than those on automatic payment methods
 <img width="900" height="550" alt="Churn Rate by Payment Method" src="https://github.com/user-attachments/assets/7cf72009-ed7f-4d54-a292-90743d782d61" />
-- Customers receiving **discounts or add-on charges** churn about **3× less** than those receiving neither
+- Customers receiving discounts or add-on charges churn about 3× less than those receiving neither
   <img width="900" height="550" alt="Churn Rate by Charge Category" src="https://github.com/user-attachments/assets/c12f5823-105f-4eec-9a93-4479f488aa20" />
-- **Senior citizens** show a higher churn rate than non-senior customers (see the note in [Bug Fixes](#bug-fixes--data-quality-corrections) below before relying on this one)
+- Senior citizens show a higher churn rate than non-senior customers (see the note in [Bug Fixes](#bug-fixes--data-quality-corrections) below before relying on this one)
   <img width="900" height="550" alt="Churn Rate by Age Bucket" src="https://github.com/user-attachments/assets/e43c7a02-337f-4241-9116-dc4595bd449a" />
-- A **high-risk profile** — defined by contract type, tenure period, and internet service — was found for **916 customers**: 643 have already churned, and **273 remain as high-potential future churn**
-- This high-risk segment is just **13.01%** of the customer base but accounts for a **70.2% churn rate** (vs. 20.0% for everyone else) and **38.2%** of total monthly revenue at risk
-- Average monthly revenue at risk is **$82.70 per churned customer**, pushing potential monthly revenue at risk up by **42%**
+- High-risk profile — defined by contract type, tenure period, and internet service — was found for 916 customers: 643 have already churned, and 273 remain as high-potential future churn
+- This high-risk segment is just 13.01% of the customer base but accounts for a 70.2% churn rate (vs. 20.0% for everyone else) and 38.2% of total monthly revenue at risk
+- Average monthly revenue at risk is $82.70 per churned customer, pushing potential monthly revenue at risk up by 42%
   <img width="1600" height="900" alt="High Risk vs Other Customers – Key Metrics" src="https://github.com/user-attachments/assets/5498f1d5-7ca4-444b-a182-3d2170986488" />
 
 
@@ -192,7 +189,6 @@ An interesting nuance: the SQL/EDA stage looked at partner + dependents together
    ```bash
    pip install pandas numpy matplotlib seaborn scipy psycopg2-binary python-dotenv jupyter
    ```
-   Or, using a `requirements.txt`:
    ```
    pandas
    numpy
